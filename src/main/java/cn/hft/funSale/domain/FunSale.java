@@ -9,28 +9,39 @@ import java.util.Date;
  * 代表房源出租对象与数据库的FUN_SALE对应
  */
 @Entity
-@Table
+@Table(name = "FUN_SALE")
 public class FunSale implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="payablemoney_seq")//GenerationType.SEQUENCE：根据底层数据库的序列来生成主键，条件是数据库支持序列。
+    @SequenceGenerator(name="payablemoney_seq", sequenceName="SEQ_FUN_SALE_SALE_ID")//name属性表示该表主键生成策略的名称，它被引用在@GeneratedValue中设置的“generator”值中。
+                                                                                     /* sequenceName属性表示生成策略用到的数据库序列名称。
+                                                                                        initialValue表示主键初识值，默认为0。
+                                                                                         allocationSize表示每次主键值增加的大小，例如设置成1，则表示每次创建新记录后自动加1，默认为50。*/
     @Column(name = "SALE_ID")
     private Integer saleID;//房源ID，自增序列
-    @Column(name = "compID")
+
+    @Column(name = "COMP_ID")
     private Integer compID;//公司ID
+
     @Column(name = "CITY_ID")
     private Integer cityID;//    城市ID
+
     @Column(name = "DEPT_ID")
     private Integer deptID;//分店ID
+
     @Column(name = "CREATION_TIME")
     private Date creationTime;//登记时间
+
     @Column(name = "SALE_NO")
     private String saleNo;//系统编码
+
     @Column(name = "SALE_USEAGE")
     private Integer saleUseage;//房屋用途
+
     @Column(name = "SALE_SUBJECT")
     private String saleSubject;//房源标题
-    @Column(name = "NUMERIC")
-    private Double numeric;//建筑面积
+    @Column(name = "SALE_AREA")
+    private BigDecimal saleArea;//建筑面积
     @Column(name = "SALE_SOURCE")
     private Integer saleSource;//信息来源
     @Column(name = "SALE_EXPLRTH")
@@ -42,7 +53,7 @@ public class FunSale implements Serializable {
     @Column(name = "SALE_ROOM")
     private Integer saleRoom;//几房/几室
     @Column(name = "SALE_INNERAREA")
-    private Double saleInnerarea;//套内面积
+    private BigDecimal saleInnerarea;//套内面积
     @Column(name = "REGION_NAME")
     private String regionName;//行政区名称，区域名称
     @Column(name = "SECTION_NAME")
@@ -57,6 +68,8 @@ public class FunSale implements Serializable {
     private Integer saleConsign;//委托
     @Column(name = "SALE_MAP")
     private Integer saleMap;//图片张数，默认=0
+    @Column(name = "SALE_LEVEL")
+    private Integer saleLevel;//级别
     @Column(name = "PLATE_TYPE")
     private Integer plateType;//盘别
     @Column(name = "SALE_STATUS")
@@ -69,7 +82,7 @@ public class FunSale implements Serializable {
     private Boolean redFlag;//红色警示
     @Column(name = "FROM_PUBLIC")
     private Boolean fromPublic;//是否转自抢盘
-    @Column(name = "SALE_ID_OLD")
+    @Column(name = "sale_id_old")
     private Integer saleIdOld;//老版center库对应的SALE_ID，Def: 0
     @Column(name = "HOUSE_BARGAIN")
     private Boolean houseBargain;//0:未议价1:已议价，DEF:0
@@ -84,6 +97,7 @@ public class FunSale implements Serializable {
     @Column(name = "OLD_TRUE_FLAG")
     private Integer oldTrueFlag;//老的真房源标签
 
+
     @Override
     public String toString() {
         return "FunSale{" +
@@ -95,7 +109,7 @@ public class FunSale implements Serializable {
                 ", saleNo='" + saleNo + '\'' +
                 ", saleUseage=" + saleUseage +
                 ", saleSubject='" + saleSubject + '\'' +
-                ", numeric=" + numeric +
+                ", saleArea=" + saleArea +
                 ", saleSource=" + saleSource +
                 ", saleExplrth=" + saleExplrth +
                 ", buildName='" + buildName + '\'' +
@@ -109,6 +123,7 @@ public class FunSale implements Serializable {
                 ", saleUnitPrice=" + saleUnitPrice +
                 ", saleConsign=" + saleConsign +
                 ", saleMap=" + saleMap +
+                ", saleLevel=" + saleLevel +
                 ", plateType=" + plateType +
                 ", saleStatus=" + saleStatus +
                 ", infoType=" + infoType +
@@ -156,7 +171,7 @@ public class FunSale implements Serializable {
     public void setDeptID(Integer deptID) {
         this.deptID = deptID;
     }
-
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreationTime() {
         return creationTime;
     }
@@ -189,12 +204,12 @@ public class FunSale implements Serializable {
         this.saleSubject = saleSubject;
     }
 
-    public Double getNumeric() {
-        return numeric;
+    public BigDecimal getSaleArea() {
+        return saleArea;
     }
 
-    public void setNumeric(Double numeric) {
-        this.numeric = numeric;
+    public void setSaleArea(BigDecimal saleArea) {
+        this.saleArea = saleArea;
     }
 
     public Integer getSaleSource() {
@@ -237,11 +252,11 @@ public class FunSale implements Serializable {
         this.saleRoom = saleRoom;
     }
 
-    public Double getSaleInnerarea() {
+    public BigDecimal getSaleInnerarea() {
         return saleInnerarea;
     }
 
-    public void setSaleInnerarea(Double saleInnerarea) {
+    public void setSaleInnerarea(BigDecimal saleInnerarea) {
         this.saleInnerarea = saleInnerarea;
     }
 
@@ -260,7 +275,7 @@ public class FunSale implements Serializable {
     public void setSectionName(String sectionName) {
         this.sectionName = sectionName;
     }
-
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -299,6 +314,14 @@ public class FunSale implements Serializable {
 
     public void setSaleMap(Integer saleMap) {
         this.saleMap = saleMap;
+    }
+
+    public Integer getSaleLevel() {
+        return saleLevel;
+    }
+
+    public void setSaleLevel(Integer saleLevel) {
+        this.saleLevel = saleLevel;
     }
 
     public Integer getPlateType() {

@@ -1,0 +1,42 @@
+##sqlserver configure
+#spring.datasource.url = jdbc:sqlserver://localhost:1433;DatabaseName=yy
+#spring.datasource.username = caichunlin
+#spring.datasource.password = 523418
+#spring.datasource.driverClassName = com.microsoft.sqlserver.jdbc.SQLServerDriver
+#spring.jpa.database = SQLSERVER
+#spring.jpa.properties.hibernate.default_schema = dbo
+#
+##yy�������ݿ�����
+#spring.jpa.properties.hibernate.default_catalog= yy
+#
+#
+##����hibernate����
+#spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.SQLServer2012Dialect
+#
+## Show or not log for each sql query
+#spring.jpa.show-sql = true
+## Hibernate ddl auto (create, create-drop, update)
+#spring.jpa.hibernate.ddl-auto = update
+## Naming strategy
+spring:
+  profiles:
+    active: product
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://192.168.11.106:33434;databaseName=hft_erpdb_AK
+    username: user_fafa
+    password: user_fafa123456
+  jpa:
+    show-sql: true
+#jpa:
+#  hibernate:
+#  ddl-auto: validate
+#  show-sql: true
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: UTC
+#pagehelper:
+#    helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql

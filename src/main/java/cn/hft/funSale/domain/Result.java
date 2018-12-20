@@ -4,22 +4,22 @@ import java.io.Serializable;
 
 public class Result implements Serializable {
     private Integer codeTape;
-    private String messager;
+    private String message;
 
     public Result() {
+    }
+
+    public Result(Integer codeTape, String message) {
+        this.codeTape = codeTape;
+        this.message = message;
     }
 
     @Override
     public String toString() {
         return "Result{" +
                 "codeTape=" + codeTape +
-                ", messager='" + messager + '\'' +
+                ", message='" + message + '\'' +
                 '}';
-    }
-
-    public Result(Integer codeTape, String messager) {
-        this.codeTape = codeTape;
-        this.messager = messager;
     }
 
     public Integer getCodeTape() {
@@ -30,11 +30,12 @@ public class Result implements Serializable {
         this.codeTape = codeTape;
     }
 
-    public String getMessager() {
-        return messager;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMessager(String messager) {
-        this.messager = messager;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
+
